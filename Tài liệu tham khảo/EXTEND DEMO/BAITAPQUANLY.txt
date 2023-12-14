@@ -1,0 +1,47 @@
+DỰ ÁN QUẢN LÝ THƯ VIỆN
+Để hỗ trợ việc đọc sách và đăng ký mượn sách online, thư viện Thành Phố Đà Nẵng đặt hàng
+FastTrackSE xây dựng hệ thống quản lý thư viện điện tử với các chức năng sau.
+1.Quản lý thông bạn đọc:
+Hệ thống cho phép quản lý (thêm mới, sửa, xóa) bạn đọc theo các thông tin
+ Mã thành viên
+ Họ Tên thành viên
+ Địa chỉ nhà (số nhà, đường phố)
+ Phường
+ Quận
+ Tỉnh/ Thành phố
+ Điện thoại
+ Email
+
+2.Quản lý sách
+Cho phép quản lý tất cả các đầu sách gồm:
+ Mã sách
+ Tên sách
+ Tác giả
+ Nhà xuất bản
+ Thể loại sách
+ Năm suất bản
+ Số lượng
+3.Mượn trả sách
+Hệ thống cho phép quản lý việc mượn trả sách gồm
+
+1
+
+ Mã giao dịch
+ Ngày mượn
+ Mã thành viên
+ Mã sách
+Chú ý: mỗi bạn đọc không được mượn quá 3 quyển sách tại một thời điểm.
+Số lượng đầu sách phải còn đủ trong kho thì mới thực hiện việc cho mượn
+4.Thống kê báo cáo:
+Xây dựng hệ thống báo cáo thống kê gồm các loại sau
+1. Báo cáo danh sách bạn đọc
+Cho phép chọn lựa theo các tiêu chí dưới đây:
+ Thành phố
+ Mã thành viên
+In ra danh sách bạn đọc với thống kê tình hình mượn sách hiện tại
+2. Báo cáo thống kê đầu sách
+Cho phép chọn lựa theo các tiêu chí dưới đây:
+ Nhà xuất bản
+ Thể loại
+ Tác giả
+In ra danh sách các đầu sách đang có với thống kê số lượng tổng và số lượng tồn kho.

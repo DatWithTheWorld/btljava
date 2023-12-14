@@ -1,0 +1,98 @@
+package student.view;
+
+import java.sql.*;
+import java.util.Scanner;
+
+import student.controller.DBController;
+import student.model.Student;
+
+public class StudentView {
+	Student student;
+	
+	public StudentView() {
+		super();
+	}
+
+	public StudentView(Student x) {
+		super();
+		this.student = x;
+	}
+
+	public void display() {
+		System.out.println(student.getId() +":"+student.getName() + ":"+student.getGba()+":"+student.getLop());
+	}
+	
+	public void input() {
+		this.student = new Student();
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Nhap id: ");
+		student.setId(sc.nextLine());
+		System.out.print("Nhap ten: ");
+		student.setName(sc.nextLine());
+		System.out.print("Nhap gba: ");
+		student.setGba(Double.parseDouble(sc.nextLine()));
+		System.out.print("Nhap lop: ");
+		student.setLop(sc.nextLine());
+	}
+
+	static void menu() {
+		System.out.println("Menu");
+		System.out.println("1. Them");
+		System.out.println("2. Xoa");
+		System.out.println("3. Cap nhat");
+		System.out.println("4. Hien thi");
+		System.out.println("0. Thoat");
+	}
+	public static void main(String args[]) {
+		DBController dbCon = new DBController();
+		Scanner sc = new Scanner(System.in);
+		while(true) {
+			menu();
+			System.out.print("Chon menu: ");
+			int chon = Integer.parseInt(sc.nextLine());
+			
+			if (chon == 0) break;
+			switch (chon) {
+				case 1:
+					StudentView y = new StudentView();
+					y.input();
+					Student x = y.student;
+					dbCon.insertToStudent(x);
+					break;
+				case 2:
+					System.out.print("Nhap id = ");
+					String id = sc.nextLine();
+					dbCon.deleteStudentByID(id);
+					break;
+					
+				case 3:
+					System.out.print("Nhap id = ");
+					String id1 = sc.nextLine();
+					
+					System.out.print("Nhap ten moi = ");
+					String name = sc.nextLine();
+					dbCon.updateNameStudentByID(id1, name);
+					break;
+					
+				case 4:
+					ResultSet rs = dbCon.selectAll("student");
+				try {
+					while (rs.next()) {
+						Student stu = new Student(rs.getString(1), rs.getString(2), Double.parseDouble(rs.getString(3)), rs.getString(4));
+						StudentView v = new StudentView(stu);
+						v.display();
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break;
+				
+				default:
+			}
+			
+		}
+	}
+	
+	
+}

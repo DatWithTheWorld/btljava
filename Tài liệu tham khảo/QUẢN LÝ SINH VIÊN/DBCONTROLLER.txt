@@ -1,0 +1,107 @@
+package student.controller;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import student.model.Student;
+
+import java.sql.*;
+
+public class DBController {
+	Statement stmt;
+	Connection con;
+	public DBController() {
+		  try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            try {
+	                this.con = DriverManager.getConnection("jdbc"
+	                        + ":mysql://localhost:3306/SM?useUnicode=yes&characterEncoding=UTF-8","root","");
+	                this.stmt = con.createStatement();
+	              //  stmt.executeUpdate("insert into student values(\"183\", \"Nguyet\", \"20\", \"18T3\")");
+	                //stmt.executeUpdate("insert into lop values(\"183\", \"18T3\")");
+	            } catch (SQLException e) {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+	            }
+	        } catch (ClassNotFoundException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	}
+	public void insertToStudent(Student x) {
+		String sql = "insert into student values (\'" +x.getId()+ "\', \'"+x.getName()+"\', "+x.getGba()+" , \'"+x.getLop()+"\')" ;
+		try {
+			System.out.println(sql);
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+	}
+	public ResultSet selectAll(String tableName) {
+		ResultSet rs = null;
+		String sql = "select * from " + tableName;
+		try {
+			rs = stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	public void deleteStudentByID(String id) {
+		String sql = "delete from student where ID like "+id;
+		try {
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void updateNameStudentByID(String id, String name) {
+		String sql = "update student set name = \'"+name+"\' where id = \'" +id+"\'";
+		try {
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	ResultSet getStudentByID(String id, String tableName) {
+		ResultSet rs = null;
+		
+		String sql = "select * from "+ tableName + " where ID like \'"+id+"\'";
+		try {
+			rs = stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	ResultSet getStudentByLop(String lop, String tableName) {
+		ResultSet rs = null;
+		
+		String sql = "select * from "+ tableName + " where ID like \'"+lop+"\'";
+		try {
+			rs = stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	public Statement getStmt() {
+		return stmt;
+	}
+	public void setStmt(Statement stmt) {
+		this.stmt = stmt;
+	}
+	
+	
+}

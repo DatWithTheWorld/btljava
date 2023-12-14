@@ -1,0 +1,110 @@
+import java.util.Scanner;
+
+public class Student {
+    String name;
+    double gba;
+    String id;
+    public Student(String name, double gba, String id) {
+        super();
+        this.name = name;
+        this.gba = gba;
+        this.id = id;
+    }
+    public Student() {
+        super();
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public double getGba() {
+        return gba;
+    }
+    public void setGba(double gba) {
+        this.gba = gba;
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public void input() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Name = ");
+        this.name = sc.nextLine();
+       
+        System.out.print("GBA = ");
+        this.gba = Double.parseDouble(sc.nextLine());
+       
+        System.out.print("ID = ");
+        this.id = sc.nextLine();
+    }
+   
+    public void output() {
+        System.out.println(this.id+" "+this.name+" "+this.gba);
+       
+    }
+   }
+
+
+
+import java.util.Scanner;
+
+public class StudentRun {
+    static void menu() {
+        System.out.println("1. Input students");
+        System.out.println("2. Output students");
+        System.out.println("3. Modify student1");
+        System.out.println("0. Exit");
+        System.out.print("Choice:");
+    }
+    public static void main(String args[]) {
+       
+        Scanner sc = new Scanner(System.in);
+        Student [] list = new Student[10];
+        int num = 0;
+        while (true) {
+            menu();
+            int choice =  Integer.parseInt(sc.nextLine());
+            switch (choice) {
+                case 1:
+                    System.out.print("Students number = ");
+                    num = Integer.parseInt(sc.nextLine());
+                    int x = 10;
+                   
+                    for (int i = 0; i < num; i++) {
+                        Student st = new Student();
+                        st.input();
+                        list[i] = st;
+                       
+                    }
+                    break;
+                   
+                case 2:
+                   
+                    for (int i = 0; i < num; i++) {
+                        list[i].output();
+                    }
+                    break;
+                case 3:
+                    System.out.print("Input ID for modifying ...=");
+                    String nid = sc.nextLine();
+                    for (int i = 0; i < num; i++) {
+                        if (list[i].id.equals(nid)) {
+                            System.out.print("New name =");
+                            list[i].name = sc.nextLine();
+                           
+                        }
+                    }
+                    break;
+                default:
+                    if (choice !=0) System.out.println("Invalid");
+                    break;
+            }
+            if (choice == 0) break;
+        }
+    }
+}

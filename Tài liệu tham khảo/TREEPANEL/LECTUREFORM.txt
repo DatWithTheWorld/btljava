@@ -1,0 +1,43 @@
+package student.view;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.*;
+
+public class LecturerInputForm extends JPanel {
+	JTextField jtfName;
+	JTextField jtfLevel;
+	JTextField jtfDept;
+	JTextField jtfAge;
+	public LecturerInputForm() {
+		setLayout(new BorderLayout());
+		
+		JPanel pnLabel = new JPanel();
+		pnLabel.setLayout(new GridLayout(4,1));
+		
+		JLabel lbName = new JLabel("Name");
+		JLabel lbLevel = new JLabel("Level");
+		JLabel lbDept = new JLabel("Dept");
+		JLabel lbAge = new JLabel("Age");
+		pnLabel.add(lbName);
+		pnLabel.add(lbLevel);
+		pnLabel.add(lbDept);
+		pnLabel.add(lbAge);
+		
+		JPanel pnTextField = new JPanel();
+		pnTextField.setLayout(new GridLayout(4,1));
+		jtfName = new JTextField(15);
+		jtfLevel = new JTextField(15);
+		jtfDept = new JTextField(15);
+		jtfAge = new JTextField(15);
+		
+		pnTextField.add(jtfName);
+		pnTextField.add(jtfLevel);
+		pnTextField.add(jtfDept);
+		pnTextField.add(jtfAge);
+		
+		add(pnLabel, BorderLayout.WEST);
+		add(pnTextField, BorderLayout.CENTER);
+	}
+}

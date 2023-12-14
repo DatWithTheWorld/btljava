@@ -1,0 +1,87 @@
+package student.view;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+
+public class TreePanel extends JPanel {
+	public TreePanel(JPanel pnCardCenter) {
+		DefaultMutableTreeNode node = new DefaultMutableTreeNode("Management");
+		final JTree tree = new JTree(node);
+
+		DefaultMutableTreeNode object = new DefaultMutableTreeNode("Object");
+		DefaultMutableTreeNode studentNode = new DefaultMutableTreeNode("Student");
+		DefaultMutableTreeNode lecturerNode = new DefaultMutableTreeNode("Lecturer");
+		node.add(object);
+		object.add(studentNode);
+		object.add(lecturerNode);
+
+		ImageIcon imageIcon = new ImageIcon(GUI.class.getResource("Capture.jpg"));
+
+		DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+		renderer.setLeafIcon(imageIcon);
+
+		tree.setCellRenderer(renderer);
+
+		tree.expandRow(0);
+		tree.expandRow(1);
+
+		
+		tree.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				Object o = tree.getLastSelectedPathComponent();
+				DefaultMutableTreeNode node=(DefaultMutableTreeNode)o;
+				
+				String str = node.toString();
+				if (str.equals("Lecturer")) {
+					System.out.println(node.toString());
+					CardLayout cl=(CardLayout)pnCardCenter.getLayout();
+					 cl.show(pnCardCenter, "lecturer");
+				} else {
+					 CardLayout cl=(CardLayout)pnCardCenter.getLayout();
+					 cl.show(pnCardCenter, "student");
+				}
+
+			}
+		});
+
+
+		setLayout(new BorderLayout());
+		add(tree, BorderLayout.CENTER);
+
+	}
+}

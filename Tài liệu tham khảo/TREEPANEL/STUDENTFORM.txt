@@ -1,0 +1,49 @@
+package student.view;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+
+public class StudentInputForm extends JPanel {
+	JTextField jtfName;
+	JTextField jtfGBA;
+	JTextField jtfClass;
+	JTextField jtfID;
+	public StudentInputForm() {
+		Border border = BorderFactory.createLineBorder(Color.red);
+		TitledBorder tborder = BorderFactory.createTitledBorder(border, "Input student form");
+		setBorder(tborder);
+		setLayout(new BorderLayout());
+		
+		JPanel pnCenter1 = new JPanel(); //tạo panel để thêm vào bên trái của panel trung tâm (pnCenter)
+		pnCenter1.setLayout(new GridLayout(4,1));//thiết lập định dạng các thành phần thêm vào pnCenter1 theo 4 hàng 1 cột 
+		JPanel pnCenter2 = new JPanel(); //tạo panel để thêm vào trung tâm của pnCenter
+		pnCenter2.setLayout(new GridLayout(4,1)); 
+		
+		JLabel jlbID = new JLabel("ID");
+		pnCenter1.add(jlbID);
+		
+		jtfID = new JTextField(25);
+		pnCenter2.add(jtfID);
+	
+		JLabel jlbName = new JLabel("Name");
+		pnCenter1.add(jlbName);
+		jtfName = new JTextField(25);
+		pnCenter2.add(jtfName);
+		JLabel jlbGBA = new JLabel("GBA");
+		pnCenter1.add(jlbGBA);
+		jtfGBA = new JTextField(25);
+		pnCenter2.add(jtfGBA);
+		JLabel jlbClass = new JLabel("Class");
+		pnCenter1.add(jlbClass);
+		 jtfClass = new JTextField(25);
+		pnCenter2.add(jtfClass);
+		
+		add(pnCenter1, BorderLayout.WEST);
+		add(pnCenter2, BorderLayout.CENTER);
+		}
+}

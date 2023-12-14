@@ -1,0 +1,47 @@
+import java.util.Scanner;
+public class PTB2 {
+    public static void main(String args[]) {
+        // giai pt bac 2
+        float a, b, c;
+        double delta;
+        double x1, x2, x;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap a = ");
+        a = sc.nextInt();
+        // tiep tuc nhap b va c
+        System.out.print("Nhap b = ");
+        b = sc.nextInt();
+       
+        System.out.print("Nhap c = ");
+        c = sc.nextInt();
+       
+        delta = b * b - 4*a*c;
+        if (a == 0) {
+            // giai phuong trinh bac 1
+            if (b == 0) {
+                if (c == 0) {
+                    //các bạn gõ lệnh in ra màn hình câu Phương trình vô số nghiệm
+                } else {
+                    //trường hợp c khác 0
+                    //các bạn gõ lệnh in ra màn hình câu Phương trình vô nghiệm    
+                }
+            } else {
+                // phuong trinh co 1 nghiem -c/b
+                // các bạn gõ lệnh tính x = -c/b và gõ lệnh in x ra màn hình
+            }
+           
+        } else {
+            //giai phuong trinh bac 2
+            if (delta > 0) {
+                x1 = (-b + Math.sqrt(delta))/(2*a);
+                x2 = (-b - Math.sqrt(delta))/(2*a);
+                System.out.println("Phuong trinh co 2 nghiem x1 ="+x1+" va x2= "+x2);
+            } else if (delta == 0) {
+                //phuong trinh co 1 nghiem
+            } else {
+                //vo nghiem
+            }
+        }
+       
+    }
+}

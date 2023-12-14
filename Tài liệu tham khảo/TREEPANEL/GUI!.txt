@@ -1,0 +1,173 @@
+package student.view;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+
+import student.controller.DBController;
+import student.model.Student;
+
+public class GUI extends JFrame {
+	TableForm tbl;
+	public GUI() {
+		super("Demo JFrame");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		DBController dbCon = new DBController();
+		
+		JMenuBar menubar=new JMenuBar();
+		setJMenuBar(menubar);
+		JMenu mnuFile=new JMenu("Input");
+		JMenu mnuEdit=new JMenu("Edit");
+		menubar.add(mnuFile);
+		menubar.add(mnuEdit);
+		JMenuItem mnuStudent=new JMenuItem("Input Student");
+		JMenuItem mnuLecturer=new JMenuItem("Input Lecturer");
+		JMenuItem mnuFileExit=new JMenuItem("Exit");
+		mnuFileExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+		});
+		mnuFile.add(mnuStudent);
+		mnuFile.add(mnuLecturer);
+		mnuFile.addSeparator();
+		mnuFile.add(mnuFileExit);
+		
+		
+		JPanel pn = new JPanel();  //panel chính (pn) chứa các panel con
+		pn.setLayout(new BorderLayout()); //định dạng các panel con được thêm vào pn
+		
+			
+		JPanel pnEast = new JPanel(); //tạo panel để thêm vào bên phải của pn
+		pnEast.setLayout(new GridLayout(5, 1));//các thành phần được thêm vào pnEast theo 5 hàng 
+		Border borderEast = BorderFactory.createLineBorder(Color.green);
+		TitledBorder tborderEast = BorderFactory.createTitledBorder(borderEast, "Control");
+		pnEast.setBorder(tborderEast);
+		
+		StudentInputForm stf = new StudentInputForm();
+		LecturerInputForm ltr = new LecturerInputForm();
+		
+		JPanel pnCard = new JPanel();
+		pnCard.setLayout(new CardLayout());
+		pnCard.add(stf,"c1");
+		pnCard.add(ltr,"c2");
+		
+		mnuStudent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			  CardLayout cl=(CardLayout)pnCard.getLayout();
+			  cl.show(pnCard, "c1");
+			}});
+
+		mnuLecturer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			  CardLayout cl=(CardLayout)pnCard.getLayout();
+			  cl.show(pnCard, "c2");
+			}});
+		JSplitPane x = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnCard, pnEast);
+		x.setOneTouchExpandable(true);
+		x.setDividerLocation(350);
+
+	
+		
+		JButton jbnAdd = new JButton("Add");
+		pnEast.add(jbnAdd);
+		JButton jbnUpdate = new JButton("Update");
+		pnEast.add(jbnUpdate);
+		JButton jbnDelete = new JButton("Delete");
+		pnEast.add(jbnDelete);
+		JButton jbnDisplay = new JButton("Display");
+		pnEast.add(jbnDisplay);
+		JButton jbnExit = new JButton("Exit");
+		pnEast.add(jbnExit);
+		jbnAdd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String id = stf.jtfID.getText();
+				String name = stf.jtfName.getText();
+				Double gba = Double.parseDouble(stf.jtfGBA.getText());
+				String lop = stf.jtfClass.getText();
+				Student x = new Student(id, name, gba, lop);
+				dbCon.insertToStudent(x);
+				
+				tbl.dtm.setRowCount(0);
+				tbl.putDataToTable();
+			
+			}
+		});
+		
+		jbnUpdate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String id = stf.jtfID.getText();
+				
+			}
+		});
+		
+
+		
+		//pn.add(pnCenter, BorderLayout.CENTER);
+		//pn.add(pnEast, BorderLayout.EAST);
+		pn.add(x, BorderLayout.NORTH);
+		
+		tbl = new TableForm(dbCon, stf);
+		pn.add(tbl, BorderLayout.CENTER);
+		
+		jbnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String id = stf.jtfID.getText();
+				dbCon.deleteStudentByID(id);
+				tbl.dtm.setRowCount(0);
+				tbl.putDataToTable();
+			}
+		});
+		
+		JPanel pnMain = new JPanel();
+		pnMain.setLayout(new BorderLayout());
+		
+		JPanel pnCardCenter = new JPanel();
+		pnCardCenter.setLayout(new CardLayout());
+		pnCardCenter.add(pn, "student");
+		pnCardCenter.add(ltr, "lecturer");
+	
+		TreePanel pnTree = new TreePanel(pnCardCenter);
+		
+		//pn.add(tree, BorderLayout.WEST);
+		Container con = getContentPane();
+		
+		pnMain.add(pnCardCenter, BorderLayout.CENTER);
+		pnMain.add(pnTree, BorderLayout.WEST);
+		
+		con.add(pnMain);
+	}
+	
+	public static void main(String args[]) {
+		GUI x = new GUI();
+		x.setSize(600, 400);
+		x.setLocationRelativeTo(null);
+		x.setVisible(true);
+	}
+
+}

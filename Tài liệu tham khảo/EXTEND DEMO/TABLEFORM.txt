@@ -1,0 +1,93 @@
+package student.view;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import student.controller.DBController;
+
+public class TableForm extends JPanel {
+	public TableForm(DBController dbCon, StudentInputForm stf) {
+	
+		setLayout(new BorderLayout());
+		Border bdTable = BorderFactory.createLineBorder(Color.cyan);
+		TitledBorder tbTable = BorderFactory.createTitledBorder(bdTable, "Danh sach");
+		setBorder(tbTable);
+		
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("id");
+		dtm.addColumn("name");
+		dtm.addColumn("gba");
+		dtm.addColumn("lop");
+		
+		final JTable table = new JTable(dtm);
+		ResultSet rs1 = dbCon.selectAll("student");
+		try {
+			while(rs1.next()) {
+				String id = rs1.getString(1);
+				String name = rs1.getString(2);
+				double gba = Double.parseDouble(rs1.getString(3));
+				String lop = rs1.getString(4);
+				dtm.addRow(new String[] {id,name,gba+"",lop});
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int row = table.getSelectedRow();
+				//int col = table.getSelectedColumn();
+				String id = (String) table.getValueAt(row, 0);
+				String name = (String) table.getValueAt(row, 1);
+				String gba = (String) table.getValueAt(row, 2);
+				String lop = (String) table.getValueAt(row, 3);
+				
+				stf.jtfID.setText(id);
+				stf.jtfName.setText(name);
+				stf.jtfGBA.setText(gba);
+				stf.jtfClass.setText(lop);
+				
+			}
+		});
+		JScrollPane sp = new JScrollPane(table);
+		
+		add(sp, BorderLayout.CENTER);
+	}
+}
